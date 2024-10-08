@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "578372782054",
+    "project_id": "tdmsocialmedia-c0fcd",
+    "storage_bucket": "tdmsocialmedia-c0fcd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578372782054:android:7c1ff67154ae98f3b5f827",
+        "android_client_info": {
+          "package_name": "com.example.tdm_social_media"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7hbi--ixe7HZAjDRweMG5O1E-f90AOeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
