@@ -30,14 +30,23 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+        Bundle intent = getIntent().getExtras();
+        if (intent != null) {
+            String publisher = intent.getString("publisherid");
+            SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+            editor.putString("profileid", publisher);
+            editor.apply();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    if(item.getItemId() == R.id.nav_home) {
+                    if (item.getItemId() == R.id.nav_home) {
                         selectedFragment = new HomeFragment();
                     } else if (item.getItemId() == R.id.nav_search) {
                         selectedFragment = new SearchFragment();
@@ -53,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new ProfileFragment();
                     }
 
-                    if(selectedFragment != null) {
+                    if (selectedFragment != null) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     }
 
