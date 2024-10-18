@@ -1,6 +1,7 @@
 package com.example.tdm_social_media.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.tdm_social_media.Adapter.MyFotoAdapter;
+import com.example.tdm_social_media.EditProfileActivity;
 import com.example.tdm_social_media.Model.Post;
 import com.example.tdm_social_media.Model.User;
 import com.example.tdm_social_media.R;
@@ -117,7 +119,7 @@ public class ProfileFragment extends Fragment {
                 String btn = edit_profile.getText().toString();
 
                 if (btn.equals("Edit Profile")) {
-                    //goto edit profile page
+                    startActivity(new Intent(getContext(), EditProfileActivity.class));
                 } else if (btn.equals("follow")) {
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).
                             child("following").child(profileid).setValue(true);
