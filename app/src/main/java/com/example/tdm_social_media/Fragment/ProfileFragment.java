@@ -25,6 +25,7 @@ import com.example.tdm_social_media.EditProfileActivity;
 import com.example.tdm_social_media.FollowersActivity;
 import com.example.tdm_social_media.Model.Post;
 import com.example.tdm_social_media.Model.User;
+import com.example.tdm_social_media.OptionsActivity;
 import com.example.tdm_social_media.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -136,6 +137,14 @@ public class ProfileFragment extends Fragment {
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid).
                             child("followers").child(firebaseUser.getUid()).removeValue();
                 }
+            }
+        });
+
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), OptionsActivity.class);
+                startActivity(intent);
             }
         });
 
