@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.tdm_social_media.Adapter.MyFotoAdapter;
 import com.example.tdm_social_media.EditProfileActivity;
+import com.example.tdm_social_media.FollowersActivity;
 import com.example.tdm_social_media.Model.Post;
 import com.example.tdm_social_media.Model.User;
 import com.example.tdm_social_media.R;
@@ -151,6 +152,26 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 recyclerView.setVisibility(View.GONE);
                 recyclerView_saves.setVisibility(View.VISIBLE);
+            }
+        });
+
+        followers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
+                intent.putExtra("id", profileid);
+                intent.putExtra("title","followers");
+                startActivity(intent);
+            }
+        });
+
+        following.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
+                intent.putExtra("id", profileid);
+                intent.putExtra("title","following");
+                startActivity(intent);
             }
         });
 
