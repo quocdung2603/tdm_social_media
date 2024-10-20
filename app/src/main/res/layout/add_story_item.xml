@@ -41,6 +41,8 @@
         android:id="@+id/addstory_text"
         android:textColor="@color/colorPrimaryDark"
         android:layout_gravity="center"
+        android:textSize="12sp"
+        android:textStyle="bold"
         android:maxLines="1"
         />
 
