@@ -19,6 +19,7 @@ import com.example.tdm_social_media.AddStoryActivity;
 import com.example.tdm_social_media.Model.Story;
 import com.example.tdm_social_media.Model.User;
 import com.example.tdm_social_media.R;
+import com.example.tdm_social_media.StoryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -67,6 +68,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                     myStory(holder.addstory_text, holder.story_plus, true);
                 } else {
                     //TODO: go to story
+                    Intent intent = new Intent(mContext, StoryActivity.class);
+                    intent.putExtra("userid", story.getUserid());
+                    mContext.startActivity(intent);
                 }
             }
         });
@@ -145,6 +149,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         //TODO: Go to Story
+                                        Intent intent = new Intent(mContext, StoryActivity.class);
+                                        intent.putExtra("userid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                        mContext.startActivity(intent);
+                                        dialog.dismiss();
                                     }
                                 });
                         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Add Story",
