@@ -32,9 +32,9 @@ import java.util.HashMap;
 
 public class PostActivity extends AppCompatActivity {
 
-    Uri imageUri;
+    private Uri imageUri;
     String myUrl = "";
-    StorageTask uploadTask;
+    private StorageTask uploadTask;
     StorageReference storageReference;
 
     ImageView close, image_add;
@@ -93,7 +93,7 @@ public class PostActivity extends AppCompatActivity {
 
     private void uploadImage() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Đang đăng...");
+        progressDialog.setMessage("Posting...");
         progressDialog.show();
 
         if (imageUri != null) {
@@ -133,7 +133,7 @@ public class PostActivity extends AppCompatActivity {
                         finish();
 
                     } else {
-                        Toast.makeText(PostActivity.this, "Thất bại!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PostActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -144,7 +144,7 @@ public class PostActivity extends AppCompatActivity {
             });
 
         } else {
-            Toast.makeText(this, "Không có hình ảnh nào được chọn!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No image selected!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -157,7 +157,7 @@ public class PostActivity extends AppCompatActivity {
             imageUri = data.getData();
             image_add.setImageURI(imageUri);
         } else {
-            Toast.makeText(this, "Có lỗi xảy ra!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -30,7 +30,7 @@ public class FollowersActivity extends AppCompatActivity {
     String id;
     String title;
 
-    List<String> idList;
+    private List<String> idList;
 
     RecyclerView recyclerView;
     UserAdapter userAdapter;
@@ -39,7 +39,6 @@ public class FollowersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_followers);
 
         Intent intent = getIntent();
