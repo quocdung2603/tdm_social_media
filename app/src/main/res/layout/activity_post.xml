@@ -18,32 +18,28 @@
             android:background="?android:attr/windowBackground"
             android:id="@+id/toolbar"
             >
-            
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:id="@+id/close"
-                    android:src="@drawable/ic_close"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="POST"
-                    android:id="@+id/post"
-                    android:textSize="16sp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorPrimary"
-                    />
-            </RelativeLayout>
-            
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentStart="true"
+                   android:id="@+id/close"
+                   android:src="@drawable/ic_close"
+                   />
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Post your idea"
+                   android:textSize="16sp"
+                   android:layout_centerVertical="true"
+                   android:layout_marginLeft="@dimen/space_xs"
+                   android:textColor="@color/colorPrimary"
+                   />
+           </LinearLayout>
+
         </Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -58,7 +54,6 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerInside"
             android:layout_gravity="center"
             android:src="@mipmap/ic_launcher"
             android:id="@+id/image_add"
@@ -76,5 +71,19 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <Button
+            android:id="@+id/btn_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post now"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="-4dp"
+            android:layout_gravity="bottom"
+            />
+    </LinearLayout>
 
 </LinearLayout>
