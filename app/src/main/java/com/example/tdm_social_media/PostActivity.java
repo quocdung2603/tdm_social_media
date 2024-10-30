@@ -1,16 +1,26 @@
 package com.example.tdm_social_media;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,7 +48,7 @@ public class PostActivity extends AppCompatActivity {
     StorageReference storageReference;
 
     ImageView close, image_add;
-    TextView post;
+    Button post;
     EditText description;
 
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -50,7 +60,7 @@ public class PostActivity extends AppCompatActivity {
 
         close = findViewById(R.id.close);
         image_add = findViewById(R.id.image_add);
-        post = findViewById(R.id.post);
+        post = findViewById(R.id.btn_post);
         description = findViewById(R.id.description);
 
         storageReference = FirebaseStorage.getInstance().getReference("Posts");
@@ -76,6 +86,7 @@ public class PostActivity extends AppCompatActivity {
                 chooseImage();
             }
         });
+
     }
 
     private void chooseImage() {
@@ -142,7 +153,6 @@ public class PostActivity extends AppCompatActivity {
                     Toast.makeText(PostActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
-
         } else {
             Toast.makeText(this, "No image selected!", Toast.LENGTH_SHORT).show();
         }
@@ -160,4 +170,7 @@ public class PostActivity extends AppCompatActivity {
             Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
 }
