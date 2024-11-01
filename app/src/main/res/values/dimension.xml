@@ -17,4 +17,5 @@
 
 <!--    rounded-->
     <dimen name="rounded_md">15dp</dimen>
+    <dimen name="rounded_full">50%</dimen>
 </resources>
