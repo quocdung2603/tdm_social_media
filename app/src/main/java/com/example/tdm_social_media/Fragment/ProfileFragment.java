@@ -27,6 +27,7 @@ import com.example.tdm_social_media.Model.Post;
 import com.example.tdm_social_media.Model.User;
 import com.example.tdm_social_media.OptionsActivity;
 import com.example.tdm_social_media.R;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +37,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +59,8 @@ public class ProfileFragment extends Fragment {
     FirebaseUser firebaseUser;
     String profileid;
 
-    ImageButton my_fotos, saved_fotos;
+//    ImageButton my_fotos, saved_fotos;
+    TabLayout tabLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,8 +82,8 @@ public class ProfileFragment extends Fragment {
         bio = view.findViewById(R.id.bio);
         fullname = view.findViewById(R.id.fullname);
         edit_profile = view.findViewById(R.id.edit_profile);
-        my_fotos = view.findViewById(R.id.my_fotos);
-        saved_fotos = view.findViewById(R.id.saved_fotos);
+//        my_fotos = view.findViewById(R.id.my_fotos);
+//        saved_fotos = view.findViewById(R.id.saved_fotos);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -103,6 +104,31 @@ public class ProfileFragment extends Fragment {
         recyclerView.setVisibility(View.VISIBLE);
         recyclerView_saves.setVisibility(View.GONE);
 
+        tabLayout = view.findViewById(R.id.tab_view_more);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                // Handle tab click
+                int position = tab.getPosition();
+                if (position == 1) {
+                    recyclerView.setVisibility(View.GONE);
+                    recyclerView_saves.setVisibility(View.VISIBLE);
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    recyclerView_saves.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Handle tab unselected
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Handle tab reselected
+            }
+        });
+
         userInfo();
         getFollowers();
         getNrPosts();
@@ -113,7 +139,7 @@ public class ProfileFragment extends Fragment {
             edit_profile.setText("Edit Profile");
         } else {
             checkFollow();
-            saved_fotos.setVisibility(View.GONE);
+//            saved_fotos.setVisibility(View.GONE);
         }
 
         edit_profile.setOnClickListener(new View.OnClickListener() {
@@ -148,21 +174,21 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        my_fotos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recyclerView.setVisibility(View.VISIBLE);
-                recyclerView_saves.setVisibility(View.GONE);
-            }
-        });
-
-        saved_fotos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recyclerView.setVisibility(View.GONE);
-                recyclerView_saves.setVisibility(View.VISIBLE);
-            }
-        });
+//        my_fotos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                recyclerView.setVisibility(View.VISIBLE);
+//                recyclerView_saves.setVisibility(View.GONE);
+//            }
+//        });
+//
+//        saved_fotos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                recyclerView.setVisibility(View.GONE);
+//                recyclerView_saves.setVisibility(View.VISIBLE);
+//            }
+//        });
 
         followers.setOnClickListener(new View.OnClickListener() {
             @Override

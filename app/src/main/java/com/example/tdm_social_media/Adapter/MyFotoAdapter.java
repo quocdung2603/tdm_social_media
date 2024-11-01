@@ -2,6 +2,7 @@ package com.example.tdm_social_media.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class MyFotoAdapter extends RecyclerView.Adapter<MyFotoAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        Log.d("fotos", "123123");
         Post post = mPosts.get(position);
         Glide.with(context).load(post.getPostimage()).into(holder.post_image);
 
