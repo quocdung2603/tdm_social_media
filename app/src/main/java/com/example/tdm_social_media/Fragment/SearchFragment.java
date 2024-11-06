@@ -73,19 +73,18 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchUsers(String s) {
-        Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("username")
-                .startAt(s)
-                .endAt(s+"\uf8ff");
+        Query query = FirebaseDatabase.getInstance().getReference("Users");
         query.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUser.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren() ) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    mUser.add(user);
+                    if (user != null && user.getUsername().toLowerCase().contains(s.toLowerCase())) {
+                        mUser.add(user);
+                    }
                 }
-
                 userAdapter.notifyDataSetChanged();
             }
 
