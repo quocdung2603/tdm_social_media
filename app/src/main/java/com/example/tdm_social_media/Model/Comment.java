@@ -6,10 +6,15 @@ public class Comment {
     private String publisher;
     private String commentid;
 
-    public Comment(String comment, String publisher, String commentid) {
+
+
+    private long create_at;
+
+    public Comment(String comment, String publisher, String commentid, long create_at) {
         this.comment = comment;
         this.publisher = publisher;
         this.commentid = commentid;
+        this.create_at = create_at;
     }
 
     public Comment() {
@@ -38,4 +43,13 @@ public class Comment {
     public void setCommentid(String commentid) {
         this.commentid = commentid;
     }
+
+    public long getCreate_at() {
+        return create_at;
+    }
+
+    public void setCreate_at(long create_at) {
+        this.create_at = create_at;
+    }
+
 }

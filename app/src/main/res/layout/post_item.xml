@@ -34,16 +34,30 @@
                 android:layout_height="40dp"
                 android:layout_margin="10dp" />
 
-            <TextView
-                android:id="@+id/username"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_sm"
+                    android:textStyle="bold"
+                    android:text="username"
+                    />
 
-                />
+                <TextView
+                    android:id="@+id/txt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/accent_text"
+                    android:textSize="@dimen/text_sm"
+                    android:text="16/7/2024"
+                    />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -111,8 +125,7 @@
             android:textStyle="bold"
             android:id="@+id/publisher"
             android:textColor="@color/colorPrimaryDark"
-
-
+            android:visibility="gone"
             />
 
         <TextView

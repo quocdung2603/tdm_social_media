@@ -111,6 +111,7 @@ public class CommentsActivity extends AppCompatActivity {
         hashMap.put("comment",add_comment.getText().toString());
         hashMap.put("publisher", firebaseUser.getUid());
         hashMap.put("commentid", commentid);
+        hashMap.put("create_at", System.currentTimeMillis());
 
         reference.child(commentid).setValue(hashMap);
         addNotifications();

@@ -30,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
@@ -61,6 +63,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
         holder.comment.setText(comment.getComment());
         getUserInfo(holder.image_profile, holder.username, comment.getPublisher());
+
+
+        long timestamp = comment.getCreate_at();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = new Date(timestamp);
+        holder.create_at.setText(sdf.format(date));
 
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +131,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView image_profile;
-        public TextView username, comment;
+        public TextView username, comment, create_at;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -131,6 +139,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             image_profile =itemView.findViewById(R.id.image_profile);
             username = itemView.findViewById(R.id.username);
             comment = itemView.findViewById(R.id.comment);
+            create_at = itemView.findViewById(R.id.create_at);
         }
     }
 

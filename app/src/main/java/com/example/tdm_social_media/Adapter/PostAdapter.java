@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +40,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -84,6 +87,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         nrLikes(holder.likes, post.getPostid());
         getComments(post.getPostid(), holder.comments);
         isSaved(post.getPostid(), holder.save);
+
+        long timestamp = post.getCreate_at();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Convert the timestamp to a Date object
+        Date date = new Date(timestamp);
+
+        if(!holder.txt_date.getText().toString().isEmpty()) holder.txt_date.setText(sdf.format(date));
 
         holder.image_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,7 +248,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView image_profile, post_image, like, comment, save, more;
-        public TextView username, likes, description, comments, publisher;
+        public TextView username, likes, description, comments, publisher, txt_date;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -253,6 +264,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             comments = itemView.findViewById(R.id.comments);
             publisher = itemView.findViewById(R.id.publisher);
             more = itemView.findViewById(R.id.more);
+            txt_date = itemView.findViewById(R.id.txt_date);
 
         }
     }
@@ -333,6 +345,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 Glide.with(mContext).load(user.getImageurl()).into(image_profile);
                 username.setText(user.getUsername());
                 publisher.setText(user.getUsername());
+
             }
 
             @Override

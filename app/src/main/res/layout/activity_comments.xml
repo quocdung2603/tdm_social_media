@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/bg"
     tools:context=".CommentsActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -56,8 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text="POST"
-            android:textColor="?attr/colorPrimary"
+            android:text="Send"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
     </RelativeLayout>

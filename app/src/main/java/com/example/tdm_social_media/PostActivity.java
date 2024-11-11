@@ -38,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Date;
 import java.util.HashMap;
 
 public class PostActivity extends AppCompatActivity {
@@ -135,6 +136,7 @@ public class PostActivity extends AppCompatActivity {
                         hashMap.put("postimage", myUrl);
                         hashMap.put("description", description.getText().toString());
                         hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        hashMap.put("create_at", System.currentTimeMillis());
 
                         reference.child(postId).setValue(hashMap);
 

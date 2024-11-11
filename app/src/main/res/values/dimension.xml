@@ -16,6 +16,8 @@
     <dimen name="text_xl">20dp</dimen>
 
 <!--    rounded-->
+    <dimen name="rounded_sm">10dp</dimen>
     <dimen name="rounded_md">15dp</dimen>
+    <dimen name="rounded_lg">20dp</dimen>
     <dimen name="rounded_full">50%</dimen>
 </resources>
