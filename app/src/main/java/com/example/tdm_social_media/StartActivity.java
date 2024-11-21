@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,12 +20,16 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+//        FirebaseAuth.getInstance().signOut();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
 
         // chuyen huong neu user != null
         if(firebaseUser != null) {
+            Log.d("DATA", Boolean.toString(firebaseUser.isEmailVerified()));
+            if(!firebaseUser.isEmailVerified()) {
+                FirebaseAuth.getInstance().signOut();
+                return;
+            }
             startActivity(new Intent(StartActivity.this, MainActivity.class));
             finish();
         }

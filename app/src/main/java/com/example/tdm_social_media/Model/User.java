@@ -1,5 +1,8 @@
 package com.example.tdm_social_media.Model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class User {
     private String id;
     private String username;
@@ -57,5 +60,35 @@ public class User {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+
+    public void removeUser(String uid) {
+
+        // Step 1: Remove user data from Firestore
+        DatabaseReference userDocRef = FirebaseDatabase.getInstance().getReference("users").child(uid);
+
+//        userDocRef.
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        Log.d("UserDelete", "User data removed from Firestore.");
+//
+//                        // Step 2: Remove user from Firebase Authentication
+//                        FirebaseUser user = auth.getCurrentUser();
+//                        if (user != null && user.getUid().equals(uid)) {
+//                            user.delete()
+//                                    .addOnCompleteListener(deleteTask -> {
+//                                        if (deleteTask.isSuccessful()) {
+//                                            Log.d("UserDelete", "User deleted from Firebase Authentication.");
+//                                            // Optionally, redirect user to a different activity or show a success message
+//                                        } else {
+//                                            Log.e("UserDelete", "Failed to delete user from Firebase Authentication.", deleteTask.getException());
+//                                        }
+//                                    });
+//                        }
+//                    } else {
+//                        Log.e("UserDelete", "Failed to remove user data from Firestore.", task.getException());
+//                    }
+//                });
     }
 }

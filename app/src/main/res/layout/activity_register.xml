@@ -21,7 +21,8 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/edittext_background"
         android:hint="Username"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:text="minh_email"/>
 
     <EditText
         android:id="@+id/fullname"
@@ -30,7 +31,8 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/edittext_background"
         android:hint="Full Name"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:text="Minh Test Email"/>
 
     <EditText
         android:id="@+id/email"
@@ -40,7 +42,8 @@
         android:background="@drawable/edittext_background"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:text="minhnv155@gmail.com"/>
 
     <EditText
         android:id="@+id/password"
@@ -50,7 +53,8 @@
         android:background="@drawable/edittext_background"
         android:hint="Password"
         android:inputType="textPassword"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:text="123456"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/register"
