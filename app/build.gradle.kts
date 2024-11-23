@@ -7,6 +7,10 @@ android {
     namespace = "com.example.tdm_social_media"
     compileSdk = 34
 
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+    }
+
     defaultConfig {
         applicationId = "com.example.tdm_social_media"
         minSdk = 24
@@ -43,6 +47,18 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     //moi them vao
     implementation("com.github.shts:StoriesProgressView:3.0.0")
+    //send notification
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.google.firebase:firebase-messaging:24.1.0")
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.11.0")
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+
+    // Add the dependencies for the Firebase Cloud Messaging and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-analytics")
 
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

@@ -2,9 +2,14 @@ package com.example.tdm_social_media;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,7 +18,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.Manifest;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        requestNotificationPermission(this);
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -88,6 +99,34 @@ public class LoginActivity extends AppCompatActivity {
                                             return;
                                         }
 
+                                        int status = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getApplicationContext());
+                                        if (status != ConnectionResult.SUCCESS) {
+                                            Log.e("FCM", "Google Play Services not available: " + status);
+                                        }
+
+
+                                        FirebaseMessaging.getInstance().getToken()
+                                                .addOnCompleteListener(task -> {
+                                                    if (!task.isSuccessful()) {
+
+                                                        Log.e("TOKEN", "Fetching FCM token failed: " + task.getException());
+                                                        return;
+                                                    }
+
+                                                    String token = task.getResult();
+                                                    String userId = FirebaseAuth.getInstance().getUid(); // Lấy userId hiện tại
+                                                    // Lưu token vào Firebase Realtime Database
+                                                    DatabaseReference database = FirebaseDatabase.getInstance().getReference("Users");
+                                                    database.child(userId).child("token").setValue(token)
+                                                            .addOnCompleteListener(task1 -> {
+                                                                if (task1.isSuccessful()) {
+                                                                    Log.d("TOKEN", "Token saved successfully.");
+                                                                } else {
+                                                                    Log.e("TOKEN", "Failed to save token: " + task1.getException());
+                                                                }
+                                                            });
+                                                });
+
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
@@ -108,5 +147,38 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void requestNotificationPermission(Activity activity) {
+        // Chỉ cần yêu cầu quyền trên Android 13 trở lên
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Kiểm tra nếu quyền chưa được cấp
+            if (ContextCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // Yêu cầu quyền từ người dùng
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        1); // "1" là requestCode, có thể thay đổi theo nhu cầu
+            } else {
+                // Quyền đã được cấp
+                Log.d("Notification", "Notification permission already granted");
+            }
+        } else {
+            // Không cần yêu cầu quyền trên các phiên bản Android thấp hơn
+            Log.d("Notification", "Notification permission not required for this Android version");
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1) { // Kiểm tra requestCode để xác định quyền nào được xử lý
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Quyền đã được cấp
+                Log.d("Notification", "Notification permission granted");
+            } else {
+                // Quyền bị từ chối
+                Log.e("Notification", "Notification permission denied");
+            }
+        }
     }
 }

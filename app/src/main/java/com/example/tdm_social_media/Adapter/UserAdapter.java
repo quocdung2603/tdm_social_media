@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tdm_social_media.FCMNotificationSender;
 import com.example.tdm_social_media.Fragment.ProfileFragment;
 import com.example.tdm_social_media.Model.User;
 import com.example.tdm_social_media.R;
@@ -71,7 +72,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 editor.putString("profileid",user.getId());
                 editor.apply();
 
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment(mContext)).commit();
             }
         });
 
@@ -105,6 +106,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         hashMap.put("ispost", false);
 
         reference.push().setValue(hashMap);
+
+        // send notification
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                String message = user.getFullname() + " start following you";
+                FCMNotificationSender sender = new FCMNotificationSender(userid, "New notification", message, mContext);
+                sender.sendNotificationToDevice();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

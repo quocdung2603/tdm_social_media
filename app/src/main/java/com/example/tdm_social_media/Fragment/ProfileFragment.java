@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.tdm_social_media.Adapter.MyFotoAdapter;
 import com.example.tdm_social_media.EditProfileActivity;
+import com.example.tdm_social_media.FCMNotificationSender;
 import com.example.tdm_social_media.FollowersActivity;
 import com.example.tdm_social_media.Model.Post;
 import com.example.tdm_social_media.Model.User;
@@ -61,6 +62,12 @@ public class ProfileFragment extends Fragment {
 
 //    ImageButton my_fotos, saved_fotos;
     TabLayout tabLayout;
+
+    Context mContext;
+
+    public ProfileFragment(Context context) {
+        this.mContext = context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -223,6 +230,23 @@ public class ProfileFragment extends Fragment {
         hashMap.put("ispost", false);
 
         reference.push().setValue(hashMap);
+
+        // send notification
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                String message = user.getFullname() + " started following you";
+                FCMNotificationSender sender = new FCMNotificationSender(profileid, "New notification", message, mContext);
+                sender.sendNotificationToDevice();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void userInfo() {

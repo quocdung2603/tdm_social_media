@@ -75,7 +75,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     editor.apply();
 
                     ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            new ProfileFragment()).commit();
+                            new ProfileFragment(mContext)).commit();
                 }
             }
         });
@@ -123,6 +123,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    return;
+                }
                 Post post = snapshot.getValue(Post.class);
                 Glide.with(mContext).load(post.getPostimage()).into(imageView);
             }

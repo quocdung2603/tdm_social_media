@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.tdm_social_media.CommentsActivity;
+import com.example.tdm_social_media.FCMNotificationSender;
 import com.example.tdm_social_media.FollowersActivity;
 import com.example.tdm_social_media.Fragment.PostDetailFragment;
 import com.example.tdm_social_media.Fragment.ProfileFragment;
@@ -68,6 +69,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll()
+                .build();
+        StrictMode.setThreadPolicy(policy);
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         Post post = mPost.get(position);
 
@@ -104,7 +110,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 editor.apply();
 
                 ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileFragment()).commit();
+                        new ProfileFragment(mContext)).commit();
             }
         });
 
@@ -116,7 +122,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 editor.apply();
 
                 ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileFragment()).commit();
+                        new ProfileFragment(mContext)).commit();
             }
         });
 
@@ -318,9 +324,53 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
          hashMap.put("ispost", true);
 
          reference.push().setValue(hashMap);
-     }
 
-     private void nrLikes(TextView likes, String postid) {
+         // send notification
+         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+         reference.addValueEventListener(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                 User user = snapshot.getValue(User.class);
+                 String message = user.getFullname() + " liked your post";
+                 FCMNotificationSender sender = new FCMNotificationSender(userid, "New notification", message, mContext);
+                 sender.sendNotificationToDevice();
+             }
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError error) {
+
+             }
+         });
+
+     }
+//    public void sendNotificationToUser(String recipientToken, String message) {
+//        try {
+//            NotificationRequest notificationRequest = new NotificationRequest(recipientToken, message);
+//            NotificationApi api = RetrofitClientInstance.getRetrofitInstance().create(NotificationApi.class);
+//            api.sendNotification(notificationRequest).enqueue(new Callback<Void>() {
+//                @Override
+//                public void onResponse(Call<Void> call, Response<Void> response) {
+//                    if (response.isSuccessful()) {
+//                        System.out.println("Notification sent successfully!");
+//                    } else {
+//                        System.err.println("Failed to send notification: " + response.code() + " - " + response.message());
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Void> call, Throwable t) {
+//                    System.err.println("Error sending notification: " + t.getMessage());
+//                }
+//            });
+//        } catch (Exception e) {
+//            Log.e("FCM", "Error sending notification:" + e.getMessage());
+//        }
+//
+//
+//    }
+
+
+    private void nrLikes(TextView likes, String postid) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postid);
         reference.addValueEventListener(new ValueEventListener() {
             @Override

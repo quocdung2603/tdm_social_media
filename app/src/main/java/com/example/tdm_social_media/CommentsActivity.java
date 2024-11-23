@@ -129,6 +129,23 @@ public class CommentsActivity extends AppCompatActivity {
         hashMap.put("ispost", true);
 
         reference.push().setValue(hashMap);
+
+        // send notification
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                String message = user.getFullname() + " liked your post";
+                FCMNotificationSender sender = new FCMNotificationSender(publisherid, "New notification", message, getApplicationContext());
+                sender.sendNotificationToDevice();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void getImage() {
