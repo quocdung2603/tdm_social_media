@@ -52,12 +52,14 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.google.firebase:firebase-messaging:24.1.0")
     implementation("com.google.auth:google-auth-library-oauth2-http:1.11.0")
+
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
-
+    implementation(platform("com.google.firebase:firebase-messaging-directboot:20.2.0"))
     // Add the dependencies for the Firebase Cloud Messaging and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-messaging")
+
     implementation("com.google.firebase:firebase-analytics")
 
     androidTestImplementation("androidx.test.ext:junit:1.2.1")

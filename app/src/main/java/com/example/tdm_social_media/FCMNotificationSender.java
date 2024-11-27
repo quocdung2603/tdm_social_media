@@ -88,6 +88,7 @@ public class FCMNotificationSender {
                     try {
                         String accessToken = AccessTokenGenerator.getAccessToken(this.context);
                         Log.d("AccessToken", "Access Token: " + accessToken);
+                        Log.d("AccessToken", "Author token: " + task.getResult().getValue(String.class));
 
                         String messagePayload = "{\n" +
                                 "  \"message\": {\n" +
@@ -98,7 +99,7 @@ public class FCMNotificationSender {
                                 "    }\n" +
                                 "  }\n" +
                                 "}";
-
+                        Log.d("AccessToken", "Message : " + messagePayload);
                         sendNotification(accessToken, messagePayload);
                     } catch (IOException e) {
                         e.printStackTrace();

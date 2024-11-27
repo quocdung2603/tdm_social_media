@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     database.child(userId).child("token").setValue(token)
                                                             .addOnCompleteListener(task1 -> {
                                                                 if (task1.isSuccessful()) {
-                                                                    Log.d("TOKEN", "Token saved successfully.");
+                                                                    Log.d("TOKEN", "Token saved successfully." + token);
                                                                 } else {
                                                                     Log.e("TOKEN", "Failed to save token: " + task1.getException());
                                                                 }
